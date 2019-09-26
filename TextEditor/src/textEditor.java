@@ -2,14 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.Scanner;
-import javax.imageio.*;
-import java.awt.event.InputEvent;
+
 
 public class textEditor {
 	
@@ -59,12 +55,14 @@ public class textEditor {
 			panel.add(ta, BorderLayout.CENTER);
 			
 			JButton btn1 = new JButton("");
+			btn1.setToolTipText("Open a desired text file");
 			JButton btn2 = new JButton("");	
+			btn2.setToolTipText("Save the written text into a desired file");
 			JButton btn3 = new JButton("");
 			
-			btn1.setIcon(new ImageIcon("C:\\Users\\rasmu\\OneDrive\\Desktop\\Eclipse WorkSpace\\ChatBox\\Images\\open.png"));
-			btn2.setIcon(new ImageIcon("C:\\Users\\rasmu\\OneDrive\\Desktop\\Eclipse WorkSpace\\ChatBox\\Images\\save.png"));
-			btn3.setIcon(new ImageIcon("C:\\Users\\rasmu\\OneDrive\\Desktop\\Eclipse WorkSpace\\TextEditor\\src\\resources\\cut.png"));
+			btn1.setIcon(new ImageIcon(textEditor.class.getResource("/resources/open.png")));
+			btn2.setIcon(new ImageIcon(textEditor.class.getResource("/resources/save.png")));
+			btn3.setIcon(new ImageIcon(textEditor.class.getResource("/resources/cut.png")));
 			
 			tb.add(btn1);
 			tb.add(btn2);
@@ -95,6 +93,7 @@ public class textEditor {
 									String txt = reader.nextLine();
 									ta.append(txt + "\n");
 								}
+								reader.close();
 							}
 							 catch (FileNotFoundException e1) {
 								e1.printStackTrace();
@@ -116,6 +115,7 @@ public class textEditor {
 									String txt = reader.nextLine();
 									ta.append(txt + "\n");
 								}
+								reader.close();
 							}
 							 catch (FileNotFoundException e1) {
 								e1.printStackTrace();
@@ -128,6 +128,9 @@ public class textEditor {
 			 m12 .addActionListener(new ActionListener() { 
 					public void actionPerformed(ActionEvent e) {				
 								JFileChooser fc = new JFileChooser();
+								fc.setDialogTitle("Save to a text file");
+								fc.setApproveButtonText("Save");
+								fc.setApproveButtonToolTipText("Save to a file");
 								fc.showOpenDialog(null);
 								String newFile = fc.getSelectedFile().getAbsolutePath();
 								File file = new File(newFile);
@@ -150,6 +153,9 @@ public class textEditor {
 			 btn2 .addActionListener(new ActionListener() { 
 					public void actionPerformed(ActionEvent e) {				
 								JFileChooser fc = new JFileChooser();
+								fc.setDialogTitle("Save to a text file");
+								fc.setApproveButtonText("Save");
+								fc.setApproveButtonToolTipText("Save to a file");
 								fc.showOpenDialog(null);
 								String newFile = fc.getSelectedFile().getAbsolutePath();
 								File file = new File(newFile);
@@ -204,11 +210,19 @@ public class textEditor {
 			 m22.addActionListener(new ActionListener() {  // Replace
 					public void actionPerformed(ActionEvent e) {	
 							String content = ta.getText();
-							String word = JOptionPane.showInputDialog(null,"Which word do you want to replace?");
-							String word1 = JOptionPane.showInputDialog(null,"Which word do you want to put in?");
-							int index = content.indexOf(word);
+							JTextField replaced = new JTextField(10);
+							JTextField replacing = new JTextField(10);
+
+						     JPanel dia = new JPanel();
+						      dia.add(new JLabel("Replaced word:"));
+						      dia.add(replaced);	
+						      dia.add(new JLabel("Replacing word:"));								      
+						      dia.add(replacing);
+
+						    JOptionPane.showConfirmDialog(null, dia,"Replace the desired word", JOptionPane.OK_CANCEL_OPTION);
+							int index = content.indexOf(replaced.getText());
 							try {
-								ta.replaceRange(word1, index,(index + word.length()));
+								ta.replaceRange(replacing.getText(), index,(index + replaced.getText().length()));
 							}
 							catch (IllegalArgumentException i) {
 								ta.append("bruv");
