@@ -190,7 +190,7 @@ public class textEditor {
 			 
 			 m31.addActionListener(new ActionListener() {  //About
 					public void actionPerformed(ActionEvent e) {	
-						JOptionPane.showMessageDialog(null, "Made By Rasmus" + "\nKarjalainen", "About", JOptionPane.INFORMATION_MESSAGE); 
+						JOptionPane.showMessageDialog(null, "Made By\nRasmus Karjalainen", "About", JOptionPane.INFORMATION_MESSAGE); 
 					}		
 					});
 			 
