@@ -22,9 +22,9 @@ public class textEditor {
 		
 		//m1 Items
 			JMenuItem m11 = new JMenuItem("Open");
-			m11.setIcon(new ImageIcon("C:\\Users\\rasmu\\OneDrive\\Desktop\\Eclipse WorkSpace\\ChatBox\\Images\\open.png"));
+			m11.setIcon(new ImageIcon(textEditor.class.getResource("/resources/open.png")));
 			JMenuItem m12 = new JMenuItem("Save");
-			m12.setIcon(new ImageIcon("C:\\Users\\rasmu\\OneDrive\\Desktop\\Eclipse WorkSpace\\ChatBox\\Images\\save.png"));
+			m12.setIcon(new ImageIcon(textEditor.class.getResource("/resources/save.png")));
 			JMenuItem m13 = new JMenuItem("Clear");
 			JMenuItem m14 = new JMenuItem("Quit");
 			m1.add(m11);
