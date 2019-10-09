@@ -1,0 +1,13 @@
+INDEX VERSION 1.131+C:\Users\rasmu\OneDrive\Desktop\Repository Clones\Java\Eclipse WorkSpace\.metadata\.plugins\org.eclipse.jdt.core
+3025142310.index
+1364317731.index
+113558702.index
+2034591181.index
+1749246500.index
+2024944976.index
+2720348132.index
+2493935629.index
+2505999656.index
+3753208263.index
+2645282894.index
+603367685.index
