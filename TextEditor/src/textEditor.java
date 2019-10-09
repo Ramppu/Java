@@ -224,8 +224,8 @@ public class textEditor {
 							try {
 								ta.replaceRange(replacing.getText(), index,(index + replaced.getText().length()));
 							}
-							catch (IllegalArgumentException i) {
-								ta.append("bruv");
+							catch (Exception e1) {
+								JOptionPane.showMessageDialog(null, "The word you're trying to replace doesn't exist within the file!", "Error!", JOptionPane.ERROR_MESSAGE); 
 							}
 					}		
 					});
