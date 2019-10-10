@@ -17,6 +17,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class GUI_Automaatti extends JFrame {
 
@@ -27,6 +29,12 @@ public class GUI_Automaatti extends JFrame {
 	JPanel contentPane;
 	private JMenuItem mntmTallennaAutomaatinTila;
 	private JMenuItem mntmLataaAutomaatti;
+	private JTextField txtKaakao;
+	private JTextField txtTee;
+	private JTextField txtKahvi;
+	private JTextField txtKahvia;
+	private JTextField txtTeet;
+	private JTextField txtKaakaota;
 
 	/**
 	 * Main-metodi, joka k‰ynnist‰‰ sovelluksen
@@ -76,12 +84,36 @@ public class GUI_Automaatti extends JFrame {
 		menuBar.add(mnYllpito);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Aseta kahvin m‰‰r‰");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String kahvi = JOptionPane.showInputDialog(null,"Aseta kahvin m‰‰r‰");
+				int m‰‰r‰ = Integer.parseInt(kahvi);
+				ja.setKahvi(m‰‰r‰);
+				txtKahvia.setText("Kahvia: " + ja.getKahvi());
+			}
+		});
 		mnYllpito.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Aseta teen m‰‰r‰");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tee = JOptionPane.showInputDialog(null,"Aseta teen m‰‰r‰");
+				int m‰‰r‰ = Integer.parseInt(tee);
+				ja.setTee(m‰‰r‰);
+				txtTeet.setText("Teet‰: " + ja.getTee());
+			}
+		});
 		mnYllpito.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Aseta kaakaon m‰‰r‰");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String kaakao = JOptionPane.showInputDialog(null,"Aseta kaakaon m‰‰r‰");
+				int m‰‰r‰ = Integer.parseInt(kaakao);
+				ja.setKaakao(m‰‰r‰);
+				txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
+			}
+		});
 		mnYllpito.add(mntmNewMenuItem_2);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Tallenna automaatin tila");
@@ -97,8 +129,99 @@ public class GUI_Automaatti extends JFrame {
 		menuBar.add(mnTietojaOhjelmasta);
 		
 		JButton button = new JButton("");
-		button.setIcon(new ImageIcon(GUI_automaatin_testaus.class.getResource("../img/coffee.jpg")));
-		button.setBounds(42, 104, 121, 112);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ja.valmistaKahvi();
+				txtKahvia.setText("Kahvia: " + ja.getKahvi());
+			}
+		});
+		button.setIcon(new ImageIcon(GUI_Automaatti.class.getResource("/resources/coffee.jpg")));
+		button.setBounds(21, 62, 121, 112);
 		contentPane.add(button);
+		
+		JButton button_1 = new JButton("");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ja.valmistaTee();
+				txtTeet.setText("Teet‰: " + ja.getTee());
+			}
+		});
+		button_1.setIcon(new ImageIcon(GUI_Automaatti.class.getResource("/resources/tea.jpg")));
+		button_1.setBounds(21, 269, 121, 112);
+		contentPane.add(button_1);
+		
+		JButton button_2 = new JButton("");
+		button_2.setIcon(new ImageIcon(GUI_Automaatti.class.getResource("/resources/cocoa.jpg")));
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ja.valmistaKaakao();
+				txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
+			}
+		});
+		button_2.setBounds(21, 483, 121, 112);
+		contentPane.add(button_2);
+		
+		txtKaakao = new JTextField();
+		txtKaakao.setBorder(null);
+		txtKaakao.setEditable(false);
+		txtKaakao.setDisabledTextColor(Color.BLACK);
+		txtKaakao.setHorizontalAlignment(SwingConstants.CENTER);
+		txtKaakao.setOpaque(false);
+		txtKaakao.setText("Kaakao");
+		txtKaakao.setBounds(31, 614, 96, 20);
+		contentPane.add(txtKaakao);
+		txtKaakao.setColumns(10);
+		
+		txtTee = new JTextField();
+		txtTee.setEditable(false);
+		txtTee.setBorder(null);
+		txtTee.setDisabledTextColor(Color.BLACK);
+		txtTee.setOpaque(false);
+		txtTee.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTee.setText("Tee");
+		txtTee.setBounds(31, 392, 96, 20);
+		contentPane.add(txtTee);
+		txtTee.setColumns(10);
+		
+		txtKahvi = new JTextField();
+		txtKahvi.setDisabledTextColor(Color.BLACK);
+		txtKahvi.setBorder(null);
+		txtKahvi.setEnabled(false);
+		txtKahvi.setOpaque(false);
+		txtKahvi.setHorizontalAlignment(SwingConstants.CENTER);
+		txtKahvi.setText("Kahvi");
+		txtKahvi.setBounds(31, 185, 96, 20);
+		contentPane.add(txtKahvi);
+		txtKahvi.setColumns(10);
+		
+		txtKahvia = new JTextField();
+		txtKahvia.setBorder(null);
+		txtKahvia.setDisabledTextColor(Color.BLACK);
+		txtKahvia.setEnabled(false);
+		txtKahvia.setOpaque(false);
+		txtKahvia.setText("Kahvia: " + ja.getKahvi());
+		txtKahvia.setBounds(209, 103, 96, 20);
+		contentPane.add(txtKahvia);
+		txtKahvia.setColumns(10);
+		
+		txtTeet = new JTextField();
+		txtTeet.setOpaque(false);
+		txtTeet.setDisabledTextColor(Color.BLACK);
+		txtTeet.setEditable(false);
+		txtTeet.setBorder(null);
+		txtTeet.setText("Teet‰ " + ja.getTee());
+		txtTeet.setBounds(209, 309, 96, 20);
+		contentPane.add(txtTeet);
+		txtTeet.setColumns(10);
+		
+		txtKaakaota = new JTextField();
+		txtKaakaota.setBorder(null);
+		txtKaakaota.setEditable(false);
+		txtKaakaota.setDisabledTextColor(Color.BLACK);
+		txtKaakaota.setOpaque(false);
+		txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
+		txtKaakaota.setBounds(209, 533, 96, 20);
+		contentPane.add(txtKaakaota);
+		txtKaakaota.setColumns(10);
 	}
 }
