@@ -66,5 +66,39 @@ public class GUI_Automaatti extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 449, 22);
+		contentPane.add(menuBar);
+		
+		// Menu items
+		JMenu mnYllpito = new JMenu("Yll‰pito");
+		menuBar.add(mnYllpito);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Aseta kahvin m‰‰r‰");
+		mnYllpito.add(mntmNewMenuItem);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Aseta teen m‰‰r‰");
+		mnYllpito.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Aseta kaakaon m‰‰r‰");
+		mnYllpito.add(mntmNewMenuItem_2);
+		
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Tallenna automaatin tila");
+		mnYllpito.add(mntmNewMenuItem_3);
+		
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Lataa automaatti");
+		mnYllpito.add(mntmNewMenuItem_4);
+		
+		JMenuItem mntmLopeta = new JMenuItem("Lopeta");
+		mnYllpito.add(mntmLopeta);
+		
+		JMenu mnTietojaOhjelmasta = new JMenu("Tietoja Ohjelmasta");
+		menuBar.add(mnTietojaOhjelmasta);
+		
+		JButton button = new JButton("");
+		button.setIcon(new ImageIcon(GUI_automaatin_testaus.class.getResource("../img/coffee.jpg")));
+		button.setBounds(42, 104, 121, 112);
+		contentPane.add(button);
 	}
 }
