@@ -90,6 +90,9 @@ public class GUI_Automaatti extends JFrame {
 				int määrä = Integer.parseInt(kahvi);
 				ja.setKahvi(määrä);
 				txtKahvia.setText("Kahvia: " + ja.getKahvi());
+				if(ja.getKahvi() > 10) {
+					txtKahvia.setDisabledTextColor(Color.BLACK);
+				}
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem);
@@ -133,6 +136,9 @@ public class GUI_Automaatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ja.valmistaKahvi();
 				txtKahvia.setText("Kahvia: " + ja.getKahvi());
+				if(ja.getKahvi() < 10) {
+					txtKahvia.setDisabledTextColor(Color.RED);
+				}
 			}
 		});
 		button.setIcon(new ImageIcon(GUI_Automaatti.class.getResource("/resources/coffee.jpg")));
