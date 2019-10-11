@@ -33,7 +33,7 @@ public class GUI_Automaatti extends JFrame {
 	private JTextField txtTee;
 	private JTextField txtKahvi;
 	private JTextField txtKahvia;
-	private JTextField txtTeet;
+	private JTextField txtTeeta;
 	private JTextField txtKaakaota;
 
 	/**
@@ -93,6 +93,9 @@ public class GUI_Automaatti extends JFrame {
 				if(ja.getKahvi() > 10) {
 					txtKahvia.setDisabledTextColor(Color.BLACK);
 				}
+				else {
+					txtKahvia.setDisabledTextColor(Color.RED);
+				}
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem);
@@ -103,9 +106,12 @@ public class GUI_Automaatti extends JFrame {
 				String tee = JOptionPane.showInputDialog(null,"Aseta teen määrä");
 				int määrä = Integer.parseInt(tee);
 				ja.setTee(määrä);
-				txtTeet.setText("Teetä: " + ja.getTee());
+				txtTeeta.setText("Teetä: " + ja.getTee());
 				if(ja.getTee() > 10) {
-					txtTeet.setDisabledTextColor(Color.BLACK);
+					txtTeeta.setDisabledTextColor(Color.BLACK);
+				}
+				else {
+					txtTeeta.setDisabledTextColor(Color.RED);
 				}
 			}
 		});
@@ -121,14 +127,37 @@ public class GUI_Automaatti extends JFrame {
 				if(ja.getKaakao() > 10) {
 					txtKaakaota.setDisabledTextColor(Color.BLACK);
 				}
+				else {
+					txtKaakaota.setDisabledTextColor(Color.RED);
+				}
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem_2);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Tallenna automaatin tila");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {	
+				try {
+					Sarjallistamista.kirjoitaTiedostoon(ja);
+				} 
+				catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		mnYllpito.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Lataa automaatti");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Sarjallistamista.lueTiedostosta();
+				} 
+				catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		mnYllpito.add(mntmNewMenuItem_4);
 		
 		JMenuItem mntmLopeta = new JMenuItem("Lopeta");
@@ -155,10 +184,11 @@ public class GUI_Automaatti extends JFrame {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ja.valmistaTee();
-				txtTeet.setText("Teetä: " + ja.getTee());
+				txtTeeta.setText("Teetä: " + ja.getTee());
 				if(ja.getTee() < 10) {
-					txtTeet.setDisabledTextColor(Color.RED);
+					txtTeeta.setDisabledTextColor(Color.RED);
 				}
+				
 			}
 		});
 		button_1.setIcon(new ImageIcon(GUI_Automaatti.class.getResource("/resources/tea.jpg")));
@@ -202,6 +232,7 @@ public class GUI_Automaatti extends JFrame {
 		txtTee.setColumns(10);
 		
 		txtKahvi = new JTextField();
+		txtKahvi.setEditable(false);
 		txtKahvi.setDisabledTextColor(Color.BLACK);
 		txtKahvi.setBorder(null);
 		txtKahvi.setEnabled(false);
@@ -222,17 +253,19 @@ public class GUI_Automaatti extends JFrame {
 		contentPane.add(txtKahvia);
 		txtKahvia.setColumns(10);
 		
-		txtTeet = new JTextField();
-		txtTeet.setOpaque(false);
-		txtTeet.setDisabledTextColor(Color.BLACK);
-		txtTeet.setEditable(false);
-		txtTeet.setBorder(null);
-		txtTeet.setText("Teetä: " + ja.getTee());
-		txtTeet.setBounds(209, 309, 96, 20);
-		contentPane.add(txtTeet);
-		txtTeet.setColumns(10);
+		txtTeeta = new JTextField();
+		txtTeeta.setEnabled(false);
+		txtTeeta.setOpaque(false);
+		txtTeeta.setDisabledTextColor(Color.BLACK);
+		txtTeeta.setEditable(false);
+		txtTeeta.setBorder(null);
+		txtTeeta.setText("Teetä: " + ja.getTee());
+		txtTeeta.setBounds(209, 309, 96, 20);
+		contentPane.add(txtTeeta);
+		txtTeeta.setColumns(10);
 		
 		txtKaakaota = new JTextField();
+		txtKaakaota.setEnabled(false);
 		txtKaakaota.setBorder(null);
 		txtKaakaota.setEditable(false);
 		txtKaakaota.setDisabledTextColor(Color.BLACK);
