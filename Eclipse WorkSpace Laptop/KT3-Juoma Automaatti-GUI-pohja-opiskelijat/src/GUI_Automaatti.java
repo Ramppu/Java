@@ -104,6 +104,9 @@ public class GUI_Automaatti extends JFrame {
 				int määrä = Integer.parseInt(tee);
 				ja.setTee(määrä);
 				txtTeet.setText("Teetä: " + ja.getTee());
+				if(ja.getTee() > 10) {
+					txtTeet.setDisabledTextColor(Color.BLACK);
+				}
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem_1);
@@ -115,6 +118,9 @@ public class GUI_Automaatti extends JFrame {
 				int määrä = Integer.parseInt(kaakao);
 				ja.setKaakao(määrä);
 				txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
+				if(ja.getKaakao() > 10) {
+					txtKaakaota.setDisabledTextColor(Color.BLACK);
+				}
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem_2);
@@ -150,6 +156,9 @@ public class GUI_Automaatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ja.valmistaTee();
 				txtTeet.setText("Teetä: " + ja.getTee());
+				if(ja.getTee() < 10) {
+					txtTeet.setDisabledTextColor(Color.RED);
+				}
 			}
 		});
 		button_1.setIcon(new ImageIcon(GUI_Automaatti.class.getResource("/resources/tea.jpg")));
@@ -162,6 +171,9 @@ public class GUI_Automaatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ja.valmistaKaakao();
 				txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
+				if(ja.getKaakao() < 10) {
+					txtKaakaota.setDisabledTextColor(Color.RED);
+				}
 			}
 		});
 		button_2.setBounds(21, 483, 121, 112);
@@ -215,7 +227,7 @@ public class GUI_Automaatti extends JFrame {
 		txtTeet.setDisabledTextColor(Color.BLACK);
 		txtTeet.setEditable(false);
 		txtTeet.setBorder(null);
-		txtTeet.setText("Teetä " + ja.getTee());
+		txtTeet.setText("Teetä: " + ja.getTee());
 		txtTeet.setBounds(209, 309, 96, 20);
 		contentPane.add(txtTeet);
 		txtTeet.setColumns(10);
