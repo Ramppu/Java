@@ -38,7 +38,7 @@ public class Sarjallistamista {
 
 		// Palautetaan tiedostosta luettu automaatti
 		return luettu;
-
+		
 	}
 
 }

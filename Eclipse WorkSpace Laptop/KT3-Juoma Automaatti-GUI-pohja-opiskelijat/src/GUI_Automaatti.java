@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.chrono.JapaneseChronology;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JMenuBar;
@@ -151,7 +152,10 @@ public class GUI_Automaatti extends JFrame {
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Sarjallistamista.lueTiedostosta();
+					JuomaAutomaatti uusi = Sarjallistamista.lueTiedostosta();
+					txtKahvia.setText("Kahvia: " + uusi.getKahvi());
+					txtTeeta.setText("Teetä: " + uusi.getTee());
+					txtKaakaota.setText("Kaakaota: " + uusi.getKaakao());
 				} 
 				catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -161,10 +165,24 @@ public class GUI_Automaatti extends JFrame {
 		mnYllpito.add(mntmNewMenuItem_4);
 		
 		JMenuItem mntmLopeta = new JMenuItem("Lopeta");
+		mntmLopeta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		mnYllpito.add(mntmLopeta);
 		
 		JMenu mnTietojaOhjelmasta = new JMenu("Tietoja Ohjelmasta");
 		menuBar.add(mnTietojaOhjelmasta);
+		
+		JMenuItem mntmVersiotiedot = new JMenuItem("Versiotiedot");
+		mntmVersiotiedot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Versiotiedot lol = new Versiotiedot();
+				lol.setVisible(true);
+			}	
+		});
+		mnTietojaOhjelmasta.add(mntmVersiotiedot);
 		
 		JButton button = new JButton("");
 		button.addActionListener(new ActionListener() {
