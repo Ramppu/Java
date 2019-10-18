@@ -91,12 +91,7 @@ public class GUI_Automaatti extends JFrame {
 				int määrä = Integer.parseInt(kahvi);
 				ja.setKahvi(määrä);
 				txtKahvia.setText("Kahvia: " + ja.getKahvi());
-				if(ja.getKahvi() > 10) {
-					txtKahvia.setDisabledTextColor(Color.BLACK);
-				}
-				else {
-					txtKahvia.setDisabledTextColor(Color.RED);
-				}
+				kahviClr(txtKahvia, ja);
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem);
@@ -108,12 +103,7 @@ public class GUI_Automaatti extends JFrame {
 				int määrä = Integer.parseInt(tee);
 				ja.setTee(määrä);
 				txtTeeta.setText("Teetä: " + ja.getTee());
-				if(ja.getTee() > 10) {
-					txtTeeta.setDisabledTextColor(Color.BLACK);
-				}
-				else {
-					txtTeeta.setDisabledTextColor(Color.RED);
-				}
+				teeClr(txtTeeta, ja);
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem_1);
@@ -125,12 +115,7 @@ public class GUI_Automaatti extends JFrame {
 				int määrä = Integer.parseInt(kaakao);
 				ja.setKaakao(määrä);
 				txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
-				if(ja.getKaakao() > 10) {
-					txtKaakaota.setDisabledTextColor(Color.BLACK);
-				}
-				else {
-					txtKaakaota.setDisabledTextColor(Color.RED);
-				}
+				kaakaoClr(txtKaakaota, ja);
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem_2);
@@ -156,6 +141,9 @@ public class GUI_Automaatti extends JFrame {
 					txtKahvia.setText("Kahvia: " + uusi.getKahvi());
 					txtTeeta.setText("Teetä: " + uusi.getTee());
 					txtKaakaota.setText("Kaakaota: " + uusi.getKaakao());
+					txtKaakaota.setDisabledTextColor(Color.BLACK);
+					txtTeeta.setDisabledTextColor(Color.BLACK);
+					txtKahvia.setDisabledTextColor(Color.BLACK);
 				} 
 				catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -189,9 +177,7 @@ public class GUI_Automaatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ja.valmistaKahvi();
 				txtKahvia.setText("Kahvia: " + ja.getKahvi());
-				if(ja.getKahvi() < 10) {
-					txtKahvia.setDisabledTextColor(Color.RED);
-				}
+				kahviClr(txtKahvia,ja);
 			}
 		});
 		button.setIcon(new ImageIcon(GUI_Automaatti.class.getResource("/resources/coffee.jpg")));
@@ -203,9 +189,7 @@ public class GUI_Automaatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ja.valmistaTee();
 				txtTeeta.setText("Teetä: " + ja.getTee());
-				if(ja.getTee() < 10) {
-					txtTeeta.setDisabledTextColor(Color.RED);
-				}
+				teeClr(txtTeeta, ja);
 				
 			}
 		});
@@ -219,9 +203,7 @@ public class GUI_Automaatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ja.valmistaKaakao();
 				txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
-				if(ja.getKaakao() < 10) {
-					txtKaakaota.setDisabledTextColor(Color.RED);
-				}
+				kaakaoClr(txtKaakaota, ja);
 			}
 		});
 		button_2.setBounds(21, 483, 121, 112);
@@ -292,5 +274,29 @@ public class GUI_Automaatti extends JFrame {
 		txtKaakaota.setBounds(209, 533, 96, 20);
 		contentPane.add(txtKaakaota);
 		txtKaakaota.setColumns(10);
+	}
+	public static void kahviClr(JTextField txtKahvia, JuomaAutomaatti ja) {
+		if(ja.getKahvi() < 10) {
+			txtKahvia.setDisabledTextColor(Color.RED);
+		}
+		else {
+			txtKahvia.setDisabledTextColor(Color.BLACK);
+		}
+	}
+	static void teeClr(JTextField txtTeeta, JuomaAutomaatti ja) {
+		if(ja.getTee() < 10) {
+			txtTeeta.setDisabledTextColor(Color.RED);
+		}
+		else {
+			txtTeeta.setDisabledTextColor(Color.BLACK);
+		}
+	}
+	public static void kaakaoClr(JTextField txtKaakaota, JuomaAutomaatti ja) {
+		if(ja.getKaakao() < 10) {
+			txtKaakaota.setDisabledTextColor(Color.RED);
+		}
+		else {
+			txtKaakaota.setDisabledTextColor(Color.BLACK);
+		}
 	}
 }
