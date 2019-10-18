@@ -204,30 +204,34 @@ public class textEditor {
 							ta.setSelectedTextColor(Color.YELLOW);
 							ta.setSelectionStart(index);
 							ta.setSelectionEnd(index + word.length() );
+							System.out.print(index);
 					}		
 					});
 			 
 			 m22.addActionListener(new ActionListener() {  // Replace
 					public void actionPerformed(ActionEvent e) {	
-							String content = ta.getText();
-							JTextField replaced = new JTextField(10);
-							JTextField replacing = new JTextField(10);
-
-						     JPanel dia = new JPanel();
-						      dia.add(new JLabel("Replaced word:"));
-						      dia.add(replaced);	
-						      dia.add(new JLabel("Replacing word:"));								      
-						      dia.add(replacing);
-
-						    JOptionPane.showConfirmDialog(null, dia,"Replace the desired word", JOptionPane.OK_CANCEL_OPTION);
-							int index = content.indexOf(replaced.getText());
-							try {
-								ta.replaceRange(replacing.getText(), index,(index + replaced.getText().length()));
-							}
-							catch (Exception e1) {
-								JOptionPane.showMessageDialog(null, "The word you're trying to replace doesn't exist within the file", "Error", JOptionPane.ERROR_MESSAGE);
-							}
+						replaceWord(ta);
 					}		
 					});
 	}
+		public static void replaceWord(JTextArea ta) {
+			String content = ta.getText();
+			JTextField replaced = new JTextField(10);
+			JTextField replacing = new JTextField(10);
+
+		     JPanel dia = new JPanel();
+		      dia.add(new JLabel("Replaced word:"));
+		      dia.add(replaced);	
+		      dia.add(new JLabel("Replacing word:"));								      
+		      dia.add(replacing);
+
+		    JOptionPane.showConfirmDialog(null, dia,"Replace the desired word", JOptionPane.OK_CANCEL_OPTION);
+			int index = content.indexOf(replaced.getText());
+			try {
+				ta.replaceRange(replacing.getText(), index,(index + replaced.getText().length() ));
+			}
+			catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "The word you're trying to replace doesn't exist within the file!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 }

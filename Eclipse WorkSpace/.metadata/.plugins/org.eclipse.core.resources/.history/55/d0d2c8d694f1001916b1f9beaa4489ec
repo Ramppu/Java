@@ -184,50 +184,63 @@ public class textEditor {
 			 
 			 m14.addActionListener(new ActionListener() {  // Quit
 					public void actionPerformed(ActionEvent e) {	
-						frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+						close();
 					}		
 					});
 			 
 			 m31.addActionListener(new ActionListener() {  //About
 					public void actionPerformed(ActionEvent e) {	
-						JOptionPane.showMessageDialog(null, "Made By\nRasmus Karjalainen", "About", JOptionPane.INFORMATION_MESSAGE); 
+						about();
 					}		
 					});
-			 
-	
 			 m21.addActionListener(new ActionListener() {  //Search
 					public void actionPerformed(ActionEvent e) {	
-							String content = ta.getText();
-							String word = JOptionPane.showInputDialog(null,"Which word do you want to find?");
-							int index = content.indexOf(word);
-									
-							ta.setSelectedTextColor(Color.YELLOW);
-							ta.setSelectionStart(index);
-							ta.setSelectionEnd(index + word.length() );
+							searchWord(ta);
 					}		
-					});
-			 
+					});			 
 			 m22.addActionListener(new ActionListener() {  // Replace
 					public void actionPerformed(ActionEvent e) {	
-							String content = ta.getText();
-							JTextField replaced = new JTextField(10);
-							JTextField replacing = new JTextField(10);
-
-						     JPanel dia = new JPanel();
-						      dia.add(new JLabel("Replaced word:"));
-						      dia.add(replaced);	
-						      dia.add(new JLabel("Replacing word:"));								      
-						      dia.add(replacing);
-
-						    JOptionPane.showConfirmDialog(null, dia,"Replace the desired word", JOptionPane.OK_CANCEL_OPTION);
-							int index = content.indexOf(replaced.getText());
-							try {
-								ta.replaceRange(replacing.getText(), index,(index + replaced.getText().length()));
-							}
-							catch (Exception e1) {
-								ta.append("\nThe word you're trying to replace was not found!");
-							}
+						replaceWord(ta);
 					}		
 					});
 	}
-}
+		public static void replaceWord(JTextArea ta) {
+			String content = ta.getText();
+			JTextField replaced = new JTextField(10);
+			JTextField replacing = new JTextField(10);
+
+		     JPanel dia = new JPanel();
+		      dia.add(new JLabel("Replaced word:"));
+		      dia.add(replaced);	
+		      dia.add(new JLabel("Replacing word:"));								      
+		      dia.add(replacing);
+
+		    JOptionPane.showConfirmDialog(null, dia,"Replace the desired word", JOptionPane.OK_CANCEL_OPTION);
+			int index = content.indexOf(replaced.getText());
+			try {
+				ta.replaceRange(replacing.getText(), index,(index + replaced.getText().length() ));
+			}
+			catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "The word you're trying to replace doesn't exist within the file!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		public static void searchWord(JTextArea ta) {
+			String content = ta.getText();
+			String word = JOptionPane.showInputDialog(null,"Which word do you want to find?");
+			int index = content.indexOf(word);
+			if (index != -1) {		
+				ta.setSelectedTextColor(Color.YELLOW);
+				ta.setSelectionStart(index);
+				ta.setSelectionEnd(index + word.length() );
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "The word you're trying to search doesn't exist within the file!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		public static void about() {
+			JOptionPane.showMessageDialog(null, "Made By\nRasmus Karjalainen", "About", JOptionPane.INFORMATION_MESSAGE); 
+		}
+		public static void close() {
+			System.exit(0);
+		}
+}	
