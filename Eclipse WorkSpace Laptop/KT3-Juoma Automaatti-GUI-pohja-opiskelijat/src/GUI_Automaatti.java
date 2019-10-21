@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.chrono.JapaneseChronology;
+import java.util.InputMismatchException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JMenuBar;
@@ -89,9 +90,19 @@ public class GUI_Automaatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String kahvi = JOptionPane.showInputDialog(null,"Aseta kahvin m‰‰r‰");
 				int m‰‰r‰ = Integer.parseInt(kahvi);
-				ja.setKahvi(m‰‰r‰);
+				if (m‰‰r‰ > 100) {
+					ja.setKahvi(100);
+				}
+				else if (m‰‰r‰ < 0) {
+					ja.setKahvi(0);
+				}
+				else {
+					ja.setKahvi(m‰‰r‰);
+				}
+				
 				txtKahvia.setText("Kahvia: " + ja.getKahvi());
 				kahviClr(txtKahvia, ja);
+				System.out.println("Kahvin uusi m‰‰r‰ asetettu.");
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem);
@@ -101,9 +112,18 @@ public class GUI_Automaatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String tee = JOptionPane.showInputDialog(null,"Aseta teen m‰‰r‰");
 				int m‰‰r‰ = Integer.parseInt(tee);
-				ja.setTee(m‰‰r‰);
+				if (m‰‰r‰ > 100) {
+					ja.setTee(100);
+				}
+				else if (m‰‰r‰ < 0) {
+					ja.setTee(0);
+				}
+				else {
+					ja.setTee(m‰‰r‰);
+				}
 				txtTeeta.setText("Teet‰: " + ja.getTee());
 				teeClr(txtTeeta, ja);
+				System.out.println("Teen uusi m‰‰r‰ asetettu.");
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem_1);
@@ -113,9 +133,18 @@ public class GUI_Automaatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String kaakao = JOptionPane.showInputDialog(null,"Aseta kaakaon m‰‰r‰");
 				int m‰‰r‰ = Integer.parseInt(kaakao);
-				ja.setKaakao(m‰‰r‰);
+				if(m‰‰r‰ > 100) {
+					ja.setKaakao(100);
+				}
+				else if (m‰‰r‰ < 0) {
+					ja.setKaakao(0);
+				}
+				else {
+					ja.setKaakao(m‰‰r‰);
+				}
 				txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
 				kaakaoClr(txtKaakaota, ja);
+				System.out.println("Kaakaon uusi m‰‰r‰ asetettu.");
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem_2);
@@ -123,11 +152,17 @@ public class GUI_Automaatti extends JFrame {
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Tallenna automaatin tila");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				try {
-					Sarjallistamista.kirjoitaTiedostoon(ja);
-				} 
-				catch (IOException e1) {
-					e1.printStackTrace();
+				if(ja.getKaakao() < 10 || ja.getKahvi() < 10 || ja.getTee() < 10) {
+					JOptionPane.showMessageDialog(null,"Virhe!\nEt voi tallentaa automaattia tilaan, jossa Kahvin, Teen tai Kaakaon arvo on alle 10!", "Virhe!", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					try {
+						Sarjallistamista.kirjoitaTiedostoon(ja);
+						System.out.println("Automaatin tila tallennettu.");
+					} 
+					catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -144,6 +179,7 @@ public class GUI_Automaatti extends JFrame {
 					txtKaakaota.setDisabledTextColor(Color.BLACK);
 					txtTeeta.setDisabledTextColor(Color.BLACK);
 					txtKahvia.setDisabledTextColor(Color.BLACK);
+					System.out.println("Automaatin tila ladattu.");
 				} 
 				catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -166,8 +202,8 @@ public class GUI_Automaatti extends JFrame {
 		JMenuItem mntmVersiotiedot = new JMenuItem("Versiotiedot");
 		mntmVersiotiedot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Versiotiedot lol = new Versiotiedot();
-				lol.setVisible(true);
+				Versiotiedot f = new Versiotiedot();
+				f.setVisible(true);
 			}	
 		});
 		mnTietojaOhjelmasta.add(mntmVersiotiedot);
@@ -210,6 +246,7 @@ public class GUI_Automaatti extends JFrame {
 		contentPane.add(button_2);
 		
 		txtKaakao = new JTextField();
+		txtKaakao.setFont(new Font("Myanmar Text", Font.BOLD, 13));
 		txtKaakao.setBorder(null);
 		txtKaakao.setEditable(false);
 		txtKaakao.setDisabledTextColor(Color.BLACK);
@@ -221,6 +258,7 @@ public class GUI_Automaatti extends JFrame {
 		txtKaakao.setColumns(10);
 		
 		txtTee = new JTextField();
+		txtTee.setFont(new Font("Myanmar Text", Font.BOLD, 13));
 		txtTee.setEditable(false);
 		txtTee.setBorder(null);
 		txtTee.setDisabledTextColor(Color.BLACK);
@@ -232,6 +270,7 @@ public class GUI_Automaatti extends JFrame {
 		txtTee.setColumns(10);
 		
 		txtKahvi = new JTextField();
+		txtKahvi.setFont(new Font("Myanmar Text", Font.BOLD, 13));
 		txtKahvi.setEditable(false);
 		txtKahvi.setDisabledTextColor(Color.BLACK);
 		txtKahvi.setBorder(null);
@@ -244,6 +283,7 @@ public class GUI_Automaatti extends JFrame {
 		txtKahvi.setColumns(10);
 		
 		txtKahvia = new JTextField();
+		txtKahvia.setFont(new Font("Rockwell Extra Bold", Font.PLAIN, 14));
 		txtKahvia.setBorder(null);
 		txtKahvia.setDisabledTextColor(Color.BLACK);
 		txtKahvia.setEnabled(false);
@@ -254,6 +294,7 @@ public class GUI_Automaatti extends JFrame {
 		txtKahvia.setColumns(10);
 		
 		txtTeeta = new JTextField();
+		txtTeeta.setFont(new Font("Rockwell Extra Bold", Font.PLAIN, 14));
 		txtTeeta.setEnabled(false);
 		txtTeeta.setOpaque(false);
 		txtTeeta.setDisabledTextColor(Color.BLACK);
@@ -265,13 +306,14 @@ public class GUI_Automaatti extends JFrame {
 		txtTeeta.setColumns(10);
 		
 		txtKaakaota = new JTextField();
+		txtKaakaota.setFont(new Font("Rockwell Extra Bold", Font.BOLD, 14));
 		txtKaakaota.setEnabled(false);
 		txtKaakaota.setBorder(null);
 		txtKaakaota.setEditable(false);
 		txtKaakaota.setDisabledTextColor(Color.BLACK);
 		txtKaakaota.setOpaque(false);
 		txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
-		txtKaakaota.setBounds(209, 533, 96, 20);
+		txtKaakaota.setBounds(210, 533, 137, 20);
 		contentPane.add(txtKaakaota);
 		txtKaakaota.setColumns(10);
 	}
@@ -283,7 +325,7 @@ public class GUI_Automaatti extends JFrame {
 			txtKahvia.setDisabledTextColor(Color.BLACK);
 		}
 	}
-	static void teeClr(JTextField txtTeeta, JuomaAutomaatti ja) {
+	public static void teeClr(JTextField txtTeeta, JuomaAutomaatti ja) {
 		if(ja.getTee() < 10) {
 			txtTeeta.setDisabledTextColor(Color.RED);
 		}
