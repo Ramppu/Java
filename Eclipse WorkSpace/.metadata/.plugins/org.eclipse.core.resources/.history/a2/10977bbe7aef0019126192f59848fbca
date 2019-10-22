@@ -222,10 +222,10 @@ public class textEditor {
 						    JOptionPane.showConfirmDialog(null, dia,"Replace the desired word", JOptionPane.OK_CANCEL_OPTION);
 							int index = content.indexOf(replaced.getText());
 							try {
-								ta.replaceRange(replacing.getText(), index,(index + replaced.getText().length()));
+								ta.replaceRange(replacing.getText(), index,(index + replaced.getText().length() ));
 							}
 							catch (Exception e1) {
-								ta.append("bruv");
+								JOptionPane.showMessageDialog(null, "The word you're trying to replace doesn't exist within the file!", "Error", JOptionPane.ERROR_MESSAGE);
 							}
 					}		
 					});

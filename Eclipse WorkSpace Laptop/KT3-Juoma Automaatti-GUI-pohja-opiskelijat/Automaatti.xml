@@ -2,13 +2,13 @@
 <java version="1.8.0_191" class="java.beans.XMLDecoder">
  <object class="JuomaAutomaatti">
   <void property="kaakao">
-   <int>0</int>
+   <int>30</int>
   </void>
   <void property="kahvi">
-   <int>0</int>
+   <int>20</int>
   </void>
   <void property="tee">
-   <int>0</int>
+   <int>30</int>
   </void>
  </object>
 </java>
