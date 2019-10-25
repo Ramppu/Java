@@ -67,7 +67,7 @@ public class GUI_Automaatti extends JFrame {
 
 		// Ikkunan otsikko ja koko
 
-		setTitle("Kahviautomaatti GUI v. 1.0");
+		setTitle("Kahviautomaatti GUI v. 1.21");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 465, 705);
 
@@ -173,12 +173,12 @@ public class GUI_Automaatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					JuomaAutomaatti uusi = Sarjallistamista.lueTiedostosta();
-					txtKahvia.setText("Kahvia: " + uusi.getKahvi());
-					txtTeeta.setText("Teetä: " + uusi.getTee());
-					txtKaakaota.setText("Kaakaota: " + uusi.getKaakao());
-					txtKaakaota.setDisabledTextColor(Color.BLACK);
-					txtTeeta.setDisabledTextColor(Color.BLACK);
-					txtKahvia.setDisabledTextColor(Color.BLACK);
+					ja.setKahvi(uusi.getKahvi());
+					ja.setTee(uusi.getTee());
+					ja.setKaakao(uusi.getKaakao());
+					txtKahvia.setText("Kahvia: " + ja.getKahvi());
+					txtTeeta.setText("Teetä: " + ja.getTee());
+					txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
 					System.out.println("Automaatin tila ladattu.");
 				} 
 				catch (FileNotFoundException e1) {
@@ -289,7 +289,7 @@ public class GUI_Automaatti extends JFrame {
 		txtKahvia.setEnabled(false);
 		txtKahvia.setOpaque(false);
 		txtKahvia.setText("Kahvia: " + ja.getKahvi());
-		txtKahvia.setBounds(209, 103, 96, 20);
+		txtKahvia.setBounds(209, 103, 121, 20);
 		contentPane.add(txtKahvia);
 		txtKahvia.setColumns(10);
 		
@@ -320,7 +320,7 @@ public class GUI_Automaatti extends JFrame {
 	public static void kahviClr(JTextField txtKahvia, JuomaAutomaatti ja) {
 		if(ja.getKahvi() < 10) {
 			txtKahvia.setDisabledTextColor(Color.RED);
-		}
+		}//like the blood of my victims S
 		else {
 			txtKahvia.setDisabledTextColor(Color.BLACK);
 		}
