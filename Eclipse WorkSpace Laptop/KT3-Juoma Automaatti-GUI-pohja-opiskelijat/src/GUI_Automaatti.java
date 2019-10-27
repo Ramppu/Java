@@ -89,20 +89,25 @@ public class GUI_Automaatti extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String kahvi = JOptionPane.showInputDialog(null,"Aseta kahvin m‰‰r‰");
-				int m‰‰r‰ = Integer.parseInt(kahvi);
-				if (m‰‰r‰ > 100) {
-					ja.setKahvi(100);
+				try {
+					int m‰‰r‰ = Integer.parseInt(kahvi);
+					if (m‰‰r‰ > 100) {
+						ja.setKahvi(100);
+					}
+					else if (m‰‰r‰ < 0) {	
+						ja.setKahvi(0);
+					}
+					else {
+						ja.setKahvi(m‰‰r‰);
+					}
+					
+					txtKahvia.setText("Kahvia: " + ja.getKahvi());
+					kahviClr(txtKahvia, ja);
+					System.out.println("Kahvin uusi m‰‰r‰ asetettu.");
 				}
-				else if (m‰‰r‰ < 0) {
-					ja.setKahvi(0);
+				catch(Exception e1) {
+					JOptionPane.showMessageDialog(null,"Aseta arvoksi Kokonaisluku!", "Virhe!", JOptionPane.ERROR_MESSAGE);
 				}
-				else {
-					ja.setKahvi(m‰‰r‰);
-				}
-				
-				txtKahvia.setText("Kahvia: " + ja.getKahvi());
-				kahviClr(txtKahvia, ja);
-				System.out.println("Kahvin uusi m‰‰r‰ asetettu.");
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem);
@@ -111,19 +116,25 @@ public class GUI_Automaatti extends JFrame {
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String tee = JOptionPane.showInputDialog(null,"Aseta teen m‰‰r‰");
-				int m‰‰r‰ = Integer.parseInt(tee);
-				if (m‰‰r‰ > 100) {
-					ja.setTee(100);
+				try {
+					int m‰‰r‰ = Integer.parseInt(tee);
+					if (m‰‰r‰ > 100) {
+						ja.setTee(100);
+					}
+					else if (m‰‰r‰ < 0) {
+						ja.setTee(0);
+					}
+					else {
+						ja.setTee(m‰‰r‰);
+					}
+					txtTeeta.setText("Teet‰: " + ja.getTee());
+					teeClr(txtTeeta, ja);
+					System.out.println("Teen uusi m‰‰r‰ asetettu.");
 				}
-				else if (m‰‰r‰ < 0) {
-					ja.setTee(0);
+				catch(Exception e1) {
+					JOptionPane.showMessageDialog(null,"Aseta arvoksi Kokonaisluku!", "Virhe!", JOptionPane.ERROR_MESSAGE);
+
 				}
-				else {
-					ja.setTee(m‰‰r‰);
-				}
-				txtTeeta.setText("Teet‰: " + ja.getTee());
-				teeClr(txtTeeta, ja);
-				System.out.println("Teen uusi m‰‰r‰ asetettu.");
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem_1);
@@ -132,19 +143,24 @@ public class GUI_Automaatti extends JFrame {
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String kaakao = JOptionPane.showInputDialog(null,"Aseta kaakaon m‰‰r‰");
-				int m‰‰r‰ = Integer.parseInt(kaakao);
-				if(m‰‰r‰ > 100) {
-					ja.setKaakao(100);
+				try {
+					int m‰‰r‰ = Integer.parseInt(kaakao);
+					if(m‰‰r‰ > 100) {
+						ja.setKaakao(100);
+					}
+					else if (m‰‰r‰ < 0) {
+						ja.setKaakao(0);
+					}
+					else {
+						ja.setKaakao(m‰‰r‰);
+					}
+					txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
+					kaakaoClr(txtKaakaota, ja);
+					System.out.println("Kaakaon uusi m‰‰r‰ asetettu.");
 				}
-				else if (m‰‰r‰ < 0) {
-					ja.setKaakao(0);
+				catch(Exception e1) {
+					JOptionPane.showMessageDialog(null,"Aseta arvoksi Kokonaisluku!", "Virhe!", JOptionPane.ERROR_MESSAGE);
 				}
-				else {
-					ja.setKaakao(m‰‰r‰);
-				}
-				txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
-				kaakaoClr(txtKaakaota, ja);
-				System.out.println("Kaakaon uusi m‰‰r‰ asetettu.");
 			}
 		});
 		mnYllpito.add(mntmNewMenuItem_2);
@@ -180,6 +196,9 @@ public class GUI_Automaatti extends JFrame {
 					txtTeeta.setText("Teet‰: " + ja.getTee());
 					txtKaakaota.setText("Kaakaota: " + ja.getKaakao());
 					System.out.println("Automaatin tila ladattu.");
+					txtKahvia.setDisabledTextColor(Color.BLACK);
+					txtTeeta.setDisabledTextColor(Color.BLACK);
+					txtKaakaota.setDisabledTextColor(Color.BLACK);
 				} 
 				catch (FileNotFoundException e1) {
 					e1.printStackTrace();
