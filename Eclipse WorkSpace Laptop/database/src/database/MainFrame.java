@@ -44,8 +44,8 @@ public class MainFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFrame frame = new MainFrame(); // Ko8M4R0D)@78dX8a FOR DATABASE
-					frame.setTitle("Kill me");
+					MainFrame frame = new MainFrame(); 
+					frame.setTitle("Database GUI");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
