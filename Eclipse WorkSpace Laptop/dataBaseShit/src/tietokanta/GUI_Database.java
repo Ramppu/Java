@@ -39,7 +39,7 @@ public class GUI_Database extends JFrame {
 	  public void run() {
 		  try {
 			  GUI_Database frame = new GUI_Database();
-			  frame.setTitle("I want to die");
+			  frame.setTitle("Title");
 			  frame.setVisible(true);
 		  } 
 		  catch (Exception e) {
@@ -122,42 +122,42 @@ public class GUI_Database extends JFrame {
  
  public static void hae( String SQL, DefaultTableModel model) {
  
-  // Varaudutaan poikkeuksiin; esim. jos tietokantaan ei saada yhteytt‰
+  // Varaudutaan poikkeuksiin; esim. jos tietokantaan ei saada yhteytt√§
   try {
-  // M‰‰ritell‰‰n tietokannan yhteysosoite sek‰ tietokannan nimi
+  // M√§√§ritell√§√§n tietokannan yhteysosoite sek√§ tietokannan nimi
   String URL = "jdbc:mysql://localhost:3306/database";
-  // M‰‰ritell‰‰n k‰ytt‰j‰tiedot yhteyden luomista varten
+  // M√§√§ritell√§√§n k√§ytt√§j√§tiedot yhteyden luomista varten
   String USERID = "root";
   String PASSWORD = "";
  
-  // Luodaan yhteys k‰ytt‰en edell‰nmainittuja tietoja
+  // Luodaan yhteys k√§ytt√§en edell√§nmainittuja tietoja
   Connection con = DriverManager.getConnection(URL, USERID, PASSWORD);
  
   System.out.println("Yhteys tietokantaan on luotu.");
  
-  // T‰ss‰ kohtaa voitaisiin alkaa luomaan kyselyit‰
+  // T√§ss√§ kohtaa voitaisiin alkaa luomaan kyselyit√§
  
   // Suoritetaan kysely ja otetaan tulokset talteen
   Statement stmt = con.createStatement();
   ResultSet rs = stmt.executeQuery(SQL);
  
   // Tulosjoukko on taulukko-tyyppinen rakenne, joka
-  // voidaan k‰yd‰ l‰pi esim. while silmukalla
+  // voidaan k√§yd√§ l√§pi esim. while silmukalla
  
   while (rs.next()) {
   System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getInt(3));
   	model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
   }
-  // Tulostetaan myˆs palautuneiden rivien m‰‰r‰ (hieman hankalasti)
-  // hypp‰‰m‰ll‰ viimeiselle tulosriville ja tulostamalla sen indeksi
+  // Tulostetaan my√∂s palautuneiden rivien m√§√§r√§ (hieman hankalasti)
+  // hypp√§√§m√§ll√§ viimeiselle tulosriville ja tulostamalla sen indeksi
   rs.last();
-  System.out.println("Tuloksia palautui: " + rs.getRow() + " rivi‰.");
+  System.out.println("Tuloksia palautui: " + rs.getRow() + " rivi√§.");
  
   // Suljetaan yhteys
   con.close();
  
   } catch (SQLException e) {
-  System.out.println("Virhe tietokannan k‰ytˆss‰!");
+  System.out.println("Virhe tietokannan k√§yt√∂ss√§!");
   System.out.println(e);
   } // catch
  } // main
