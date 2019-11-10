@@ -137,7 +137,6 @@ public class MainFrame extends JFrame {
 				  System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getInt(3));
 				  	model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
 			  }
-			 
 			  System.out.println("Yhteys tietokantaan on luotu.");
 		 }
 		 catch(Exception e) {
