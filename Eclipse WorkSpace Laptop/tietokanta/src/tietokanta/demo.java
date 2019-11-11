@@ -21,12 +21,12 @@ class MysqlCon {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM Artist");
 			while (rs.next()){
-				System.out.println(rs.getString(1) + "  " + rs.getString(2));
+				System.out.println("Artist: " + rs.getString(2));
 			}
 			
 			ResultSet rs1 = stmt.executeQuery("SELECT * FROM Album");
 			while (rs1.next()) {
-				System.out.println(rs1.getString(1) + "  " + rs1.getString(2));
+				System.out.println("Album: " + rs1.getString(2));
 			}
 
 		
