@@ -20,6 +20,8 @@ import java.sql.Statement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class addFrame extends JFrame {
 
@@ -88,6 +90,18 @@ public class addFrame extends JFrame {
 		txtAlb.setColumns(10);
 		
 		txtRD = new JTextField();
+		txtRD.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				System.out.print(txtRD.getText().length());
+				if(txtRD.getText().length() == 4) {
+					txtRD.replaceSelection("-");
+				}
+				if (txtRD.getText().length() == 7) {
+					txtRD.replaceSelection("-");
+				}
+			}
+		});	 
 		txtRD.setBounds(95, 194, 96, 20);
 		contentPane.add(txtRD);
 		txtRD.setColumns(10);
@@ -118,7 +132,7 @@ public class addFrame extends JFrame {
 					  System.out.println("Update Affected "+results+ " rows.");
 					  // Suljetaan yhteys
 					  con.close();
-					  JOptionPane.showMessageDialog(null,"Added an Artist to the database.", "Success!",JOptionPane.PLAIN_MESSAGE);
+					  JOptionPane.showMessageDialog(null,"Added an Album to the database.", "Success!",JOptionPane.PLAIN_MESSAGE);
 				  } 
 				  catch (SQLException e1) {
 				 	System.out.println("Virhe tietokannan käytössä!");
@@ -129,5 +143,9 @@ public class addFrame extends JFrame {
 		});			 
 		add.setBounds(238, 166, 121, 50);
 		contentPane.add(add);
+		
+		JLabel lblYyyy = new JLabel("[ YYYY - MM - DD ]");
+		lblYyyy.setBounds(95, 169, 110, 14);
+		contentPane.add(lblYyyy);
 	}
 }

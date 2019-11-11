@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JFrame;
@@ -99,11 +100,27 @@ public class MainFrame extends JFrame {
 		add.setVisible(true);
 	}
 	public void deleteRow(JTable table) {
-		 DefaultTableModel model = (DefaultTableModel) this.table.getModel();
-		 int[] rows = table.getSelectedRows();
-		 for(int i=0;i<rows.length;i++){
-		     model.removeRow(rows[i]-i);
-		   }
+		String select = (String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
+		SQL = "DELETE FROM album WHERE Artist = '"+select+ "' OR Album = '"+select+"' OR Release_Date = '"+select+"';";
+		
+		 try {			 
+			  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311114";
+			  String USERID = "sql7311114";
+			  String PASSWORD = "xi3Lf6E5Iz";
+			
+			  Connection con = DriverManager.getConnection(URL, USERID, PASSWORD);
+			  System.out.println("Yhteys tietokantaan on luotu.");
+			 
+			  Statement stmt = con.createStatement();
+			  int results = stmt.executeUpdate(SQL);
+			  System.out.println("Update Affected "+results+ " rows.");
+			  JOptionPane.showMessageDialog(null,"Album removed from the database.", "Success!",JOptionPane.PLAIN_MESSAGE);
+			  
+		  } 
+		  catch (SQLException e1) {
+		 	System.out.println("Virhe tietokannan käytössä!");
+		 	System.out.println(e1);
+		  } // catch
 	}
 	public void generateTable() {
 		String columns[]= {"Artist","Album Name","Release Date"};
