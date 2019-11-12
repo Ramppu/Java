@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,7 +18,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
+
+
 import javax.swing.JTextPane;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -114,7 +123,7 @@ public class MainFrame extends JFrame {
 			  Statement stmt = con.createStatement();
 			  int results = stmt.executeUpdate(SQL);
 			  System.out.println("Update Affected "+results+ " rows.");
-			  JOptionPane.showMessageDialog(null,"Album removed from the database.", "Success!",JOptionPane.PLAIN_MESSAGE);
+			  JOptionPane.showMessageDialog(null,"Album removed from the database.", "Success !",JOptionPane.PLAIN_MESSAGE);
 			  
 		  } 
 		  catch (SQLException e1) {
@@ -138,15 +147,16 @@ public class MainFrame extends JFrame {
 		 
 		  SQL = "SELECT * FROM album;";
 		  System.out.print(SQL);
-		  updateTable(SQL, model);
+		  updateTable(SQL, model, table);
 	}
-	public void updateTable(String SQL, DefaultTableModel model) {
+	public void updateTable(String SQL, DefaultTableModel model, JTable table) {
 		 try {			 
 			  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311114";
 			  String USERID = "sql7311114";
 			  String PASSWORD = "xi3Lf6E5Iz";
 			
 			  Connection con = DriverManager.getConnection(URL, USERID, PASSWORD);
+			  System.out.println("Yhteys tietokantaan on luotu.");
 			  Statement stmt = con.createStatement();
 			  ResultSet rs = stmt.executeQuery(SQL);
 			  
@@ -154,7 +164,13 @@ public class MainFrame extends JFrame {
 				  System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getInt(3));
 				  	model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
 			  }
-			  System.out.println("Yhteys tietokantaan on luotu.");
+			  	TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+			  	table.setRowSorter(sorter);
+			  	
+			  	List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
+			  	sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+			  	sorter.setSortKeys(sortKeys);
+			  
 		 }
 		 catch(Exception e) {
 			 e.printStackTrace();

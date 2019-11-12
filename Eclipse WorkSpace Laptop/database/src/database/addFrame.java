@@ -81,7 +81,7 @@ public class addFrame extends JFrame {
 		txtArt.setColumns(10);
 		
 		JLabel lblAlb = new JLabel("Allbum Name");
-		lblAlb.setBounds(21, 141, 65, 14);
+		lblAlb.setBounds(10, 141, 89, 14);
 		contentPane.add(lblAlb);
 		
 		txtAlb = new JTextField();
@@ -107,7 +107,7 @@ public class addFrame extends JFrame {
 		txtRD.setColumns(10);
 		
 		JLabel lblReleaseDate = new JLabel("Release Date");
-		lblReleaseDate.setBounds(10, 197, 75, 14);
+		lblReleaseDate.setBounds(10, 197, 96, 14);
 		contentPane.add(lblReleaseDate);
 		
 		JButton add = new JButton("Add to Database");
@@ -118,34 +118,38 @@ public class addFrame extends JFrame {
 				String alb = txtAlb.getText();
 				String SQL = "INSERT INTO album VALUES ('"+art+"','"+alb+"','"+rd+"')";
 				
-				  try {			 
-					  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311114";
-					  String USERID = "sql7311114";
-					  String PASSWORD = "xi3Lf6E5Iz";
-					
-					  Connection con = DriverManager.getConnection(URL, USERID, PASSWORD);
-					 
-					  System.out.println("Yhteys tietokantaan on luotu.");
-					 
-					  Statement stmt = con.createStatement();
-					  int results = stmt.executeUpdate(SQL);
-					  System.out.println("Update Affected "+results+ " rows.");
-					  // Suljetaan yhteys
-					  con.close();
-					  JOptionPane.showMessageDialog(null,"Added an Album to the database.", "Success!",JOptionPane.PLAIN_MESSAGE);
-				  } 
-				  catch (SQLException e1) {
-				 	System.out.println("Virhe tietokannan käytössä!");
-				 	System.out.println(e1);
-				  } // catch
-
+				if (rd == "" || art == "" || alb == "") {
+					  try {			 
+						  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311114";
+						  String USERID = "sql7311114";
+						  String PASSWORD = "xi3Lf6E5Iz";
+						
+						  Connection con = DriverManager.getConnection(URL, USERID, PASSWORD);
+						 
+						  System.out.println("Yhteys tietokantaan on luotu.");
+						 
+						  Statement stmt = con.createStatement();
+						  int results = stmt.executeUpdate(SQL);
+						  System.out.println("Update Affected "+results+ " rows.");
+						  // Suljetaan yhteys
+						  con.close();
+						  JOptionPane.showMessageDialog(null,"Added an Album to the database.", "Success !",JOptionPane.PLAIN_MESSAGE);
+					  } 
+					  catch (SQLException e1) {
+					 	System.out.println("Virhe tietokannan käytössä!");
+					 	System.out.println(e1);
+					  } // catch
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Please fill in the text fields! ", "Error !",JOptionPane.PLAIN_MESSAGE);
+				}
 			}		
 		});			 
-		add.setBounds(238, 166, 121, 50);
+		add.setBounds(238, 166, 155, 50);
 		contentPane.add(add);
 		
-		JLabel lblYyyy = new JLabel("[ YYYY - MM - DD ]");
-		lblYyyy.setBounds(95, 169, 110, 14);
+		JLabel lblYyyy = new JLabel("[ YYYY -  MM  - DD ]");
+		lblYyyy.setBounds(91, 219, 110, 14);
 		contentPane.add(lblYyyy);
 	}
 }
