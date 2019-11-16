@@ -74,6 +74,7 @@ public class MainFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		generateTable();
+		initiateTable(SQL, model, table);
 		
 		JButton ar = new JButton("Add Row");
 		ar.addActionListener(new ActionListener() {
@@ -87,7 +88,7 @@ public class MainFrame extends JFrame {
 		JButton dr = new JButton("Delete A selected Row");
 		dr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				deleteRow(table);
+				deleteRow(table, model);
 			}		
 		});			 
 		dr.setBounds(29, 260, 195, 23);
@@ -96,7 +97,7 @@ public class MainFrame extends JFrame {
 		JButton up = new JButton("Update The Table");
 		up.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				generateTable();
+				updateTable(model, table);
 			}		
 		});			 
 		up.setBounds(95, 295, 225, 29);
@@ -108,8 +109,9 @@ public class MainFrame extends JFrame {
 		add = new addFrame();
 		add.setVisible(true);
 	}
-	public void deleteRow(JTable table) {
+	public void deleteRow(JTable table, DefaultTableModel model) {
 		String select = (String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
+		System.out.print(select);
 		SQL = "DELETE FROM album WHERE Artist = '"+select+ "' OR Album = '"+select+"' OR Release_Date = '"+select+"';";
 		
 		 try {			 
@@ -123,7 +125,9 @@ public class MainFrame extends JFrame {
 			  Statement stmt = con.createStatement();
 			  int results = stmt.executeUpdate(SQL);
 			  System.out.println("Update Affected "+results+ " rows.");
+			  model.removeRow(table.getSelectedRow());
 			  JOptionPane.showMessageDialog(null,"Album removed from the database.", "Success !",JOptionPane.PLAIN_MESSAGE);
+			  con.close();
 			  
 		  } 
 		  catch (SQLException e1) {
@@ -147,9 +151,50 @@ public class MainFrame extends JFrame {
 		 
 		  SQL = "SELECT * FROM album;";
 		  System.out.print(SQL);
-		  updateTable(SQL, model, table);
+		 
 	}
-	public void updateTable(String SQL, DefaultTableModel model, JTable table) {
+	public void updateTable(DefaultTableModel model, JTable table) {
+		 try {			 
+			  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311114";
+			  String USERID = "sql7311114";
+			  String PASSWORD = "xi3Lf6E5Iz";
+			  
+			  SQL = "SELECT * FROM album;";
+			
+			  Connection con = DriverManager.getConnection(URL, USERID, PASSWORD);
+			  System.out.println("Yhteys tietokantaan on luotu.");
+			  Statement stmt = con.createStatement();
+			  ResultSet rs = stmt.executeQuery(SQL);
+			  int x = 0;
+			  
+			  while (rs.next()) {
+				  if (rs.getRow() <= model.getRowCount()) {
+					  System.out.print("muutos oli iffissä" + rs.getRow() + " " + model.getRowCount());
+					  table.setValueAt(rs.getString(1),x,0);
+					  table.setValueAt(rs.getString(2),x,1);
+					  table.setValueAt(rs.getString(3),x,2);
+					  x++;
+				  }
+				  else {
+					  System.out.print("muutos oli elsessä");
+					  model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
+				  }
+			  }
+			  con.close();
+			  	//TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+			  	//table.setRowSorter(sorter);
+			  	
+			  	//List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
+			  	//sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+			  	//sorter.setSortKeys(sortKeys);
+			  
+			  
+		 }
+		 catch(Exception e) {
+			 e.printStackTrace();
+		 }
+	}
+	public void initiateTable(String SQL, DefaultTableModel model, JTable table) {
 		 try {			 
 			  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311114";
 			  String USERID = "sql7311114";
@@ -161,16 +206,9 @@ public class MainFrame extends JFrame {
 			  ResultSet rs = stmt.executeQuery(SQL);
 			  
 			  while (rs.next()) {
-				  System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getInt(3));
-				  	model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
+				  model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
 			  }
-			  	TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
-			  	table.setRowSorter(sorter);
-			  	
-			  	List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
-			  	sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-			  	sorter.setSortKeys(sortKeys);
-			  
+			  con.close();
 		 }
 		 catch(Exception e) {
 			 e.printStackTrace();
