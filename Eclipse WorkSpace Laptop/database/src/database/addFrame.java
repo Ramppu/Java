@@ -118,7 +118,7 @@ public class addFrame extends JFrame {
 				String alb = txtAlb.getText();
 				String SQL = "INSERT INTO album VALUES ('"+art+"','"+alb+"','"+rd+"')";
 				
-				if (rd == "" || art == "" || alb == "") {
+				if (!rd.equals("") && !art.equals("") && !alb.equals("")) {
 					  try {			 
 						  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311114";
 						  String USERID = "sql7311114";
