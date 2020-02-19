@@ -1,5 +1,16 @@
+
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -7,24 +18,34 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
-import database.Connection;
-import database.Exception;
-import database.Object;
-import database.ResultSet;
-import database.Statement;
-import database.String;
 
-import java.awt.event.*;
-import java.sql.*;
 
+import javax.swing.JTextPane;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 
-
-
-public class P‰‰Ikkuna extends JFrame {
+public class P√§√§Ikkuna extends JFrame {
 
 	private JPanel contentPane;
+	private DefaultTableModel model;
+	private JTable table;
+	private JScrollPane sp;
+	private JPanel ap;
+	private JTextField txtArt;
+	private JTextField txtRD;
+	private JTextField txtAN;
+	private JLabel lblArt;
+	private JLabel lblAN;
+	private JLabel lblRD;
+	private Lis√§ysIkkuna add;
+	private String SQL;
 
 	/**
 	 * Launch the application.
@@ -33,7 +54,8 @@ public class P‰‰Ikkuna extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					P‰‰Ikkuna frame = new P‰‰Ikkuna();
+					P√§√§Ikkuna frame = new P√§√§Ikkuna(); 
+					frame.setTitle("Database GUI");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,85 +67,138 @@ public class P‰‰Ikkuna extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public P‰‰Ikkuna() {
+	public P√§√§Ikkuna() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 632, 414);
+		setBounds(100, 100, 445, 386);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		LuoTaulu();
-	
+		generateTable();
+		initiateTable(SQL, model, table);
 		
-		JButton btnNewButton = new JButton("Lis\u00E4ys ");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton ar = new JButton("Add Row");
+		ar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Lis‰ysIkkuna Aa = new Lis‰ysIkkuna();
-				Aa.setVisible(true);
-				System.out.println(Aa.getPPaikka());
-				LuoTaulu();
-
+				addRow();
 			}		
 		});			 
-		btnNewButton.setBounds(29, 251, 135, 70);
-		contentPane.add(btnNewButton);
+		ar.setBounds(262, 260, 89, 23);
+		contentPane.add(ar);
 		
-		JButton btnPoisto = new JButton("Poisto");
-		btnPoisto.addActionListener(new ActionListener() {
+		JButton dr = new JButton("Delete A selected Row");
+		dr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 try {			 
-					  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311675";
-					  String USERID = "sql7311675";
-					  String PASSWORD = "rcv4C45n1M";
-					
-					  Connection con = DriverManager.getConnection(URL, USERID, PASSWORD);
-					 
-					  System.out.println("Yhteys tietokantaan on luotu.");
-				  } 
-				  catch (SQLException e1) {
-				 	System.out.println("Virhe tietokannan k‰ytˆss‰!");
-				 	System.out.println(e1);
-				  } // catch
-
+				deleteRow(table, model);
 			}		
-		});
-		btnPoisto.setBounds(243, 251, 135, 70);
-		contentPane.add(btnPoisto);
+		});			 
+		dr.setBounds(29, 260, 195, 23);
+		contentPane.add(dr);
 		
-		JButton btnPivitys = new JButton("P\u00E4ivitys");
-		btnPivitys.addActionListener(new ActionListener() {
+		JButton up = new JButton("Update The Table");
+		up.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LuoTaulu();
-			}
-		});
-		btnPivitys.setBounds(445, 251, 135, 70);
-		contentPane.add(btnPivitys);
+				updateTable(model, table);
+			}		
+		});			 
+		up.setBounds(95, 295, 225, 29);
+		contentPane.add(up);
+		
+
 	}
-	
-	public void LuoTaulu() {
-		String [] KolumnienNimet = {"Pelaajan nimi", "Pelaajan pelipaikka", "Pelaajan pelinumero"};
-		DefaultTableModel model = new DefaultTableModel(KolumnienNimet, 0);
+	public void addRow() {
+		add = new Lis√§ysIkkuna();
+		add.setVisible(true);
+	}
+	public void deleteRow(JTable table, DefaultTableModel model) {
+		String select = (String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
+		System.out.print(select);
+		SQL = "DELETE FROM album WHERE Artist = '"+select+ "' OR Album = '"+select+"' OR Release_Date = '"+select+"';";
+		
+		 try {			 
+			  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311114";
+			  String USERID = "sql7311114";
+			  String PASSWORD = "xi3Lf6E5Iz";
+			
+			  Connection con = DriverManager.getConnection(URL, USERID, PASSWORD);
+			  System.out.println("Yhteys tietokantaan on luotu.");
+			 
+			  Statement stmt = con.createStatement();
+			  int results = stmt.executeUpdate(SQL);
+			  System.out.println("Update Affected "+results+ " rows.");
+			  model.removeRow(table.getSelectedRow());
+			  JOptionPane.showMessageDialog(null,"Album removed from the database.", "Success !",JOptionPane.PLAIN_MESSAGE);
+			  con.close();
+			  
+		  } 
+		  catch (SQLException e1) {
+		 	System.out.println("Virhe tietokannan k√§yt√∂ss√§!");
+		 	System.out.println(e1);
+		  } // catch
+	}
+	public void generateTable() {
+		String columns[]= {"Artist","Album Name","Release Date"};
+		model = new DefaultTableModel(columns, 0);
 		contentPane.setLayout(null);
-		JTable table = new JTable(model);
+		table = new JTable(model);
 		table.setBorder(null);
 		table.setDefaultEditor(Object.class, null);
 		table.setBounds(0, 0, 388, 295);
-		JScrollPane sp = new JScrollPane(table);
+		sp = new JScrollPane(table);
 		sp.setBorder(null);
-		sp.setBounds(0, 0, 614, 209);
+		sp.setBounds(0, 0, 434, 209);
 		contentPane.add(sp);
 		
-		  String SQL = "SELECT * FROM Pelaajat";
+		 
+		  SQL = "SELECT * FROM album;";
 		  System.out.print(SQL);
-		  updateTable(SQL, model, table);
+		 
 	}
-
-	private void updateTable(String SQL, DefaultTableModel model, JTable table) {
-		// TODO Auto-generated method stub
+	public void updateTable(DefaultTableModel model, JTable table) {
 		 try {			 
-			  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311675";
-			  String USERID = "sql7311675";
-			  String PASSWORD = "rcv4C45n1M";
+			  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311114";
+			  String USERID = "sql7311114";
+			  String PASSWORD = "xi3Lf6E5Iz";
+			  
+			  SQL = "SELECT * FROM album;";
+			
+			  Connection con = DriverManager.getConnection(URL, USERID, PASSWORD);
+			  System.out.println("Yhteys tietokantaan on luotu.");
+			  Statement stmt = con.createStatement();
+			  ResultSet rs = stmt.executeQuery(SQL);
+			  int x = 0;
+			  
+			  while (rs.next()) {
+				  if (rs.getRow() <= model.getRowCount()) {
+					  System.out.print("muutos oli iffiss√§" + rs.getRow() + " " + model.getRowCount());
+					  table.setValueAt(rs.getString(1),x,0);
+					  table.setValueAt(rs.getString(2),x,1);
+					  table.setValueAt(rs.getString(3),x,2);
+					  x++;
+				  }
+				  else {
+					  System.out.print("muutos oli elsess√§");
+					  model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
+				  }
+			  }
+			  con.close();
+			  	//TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+			  	//table.setRowSorter(sorter);
+			  	
+			  	//List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
+			  	//sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+			  	//sorter.setSortKeys(sortKeys);
+			  
+			  
+		 }
+		 catch(Exception e) {
+			 e.printStackTrace();
+		 }
+	}
+	public void initiateTable(String SQL, DefaultTableModel model, JTable table) {
+		 try {			 
+			  String URL = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7311114";
+			  String USERID = "sql7311114";
+			  String PASSWORD = "xi3Lf6E5Iz";
 			
 			  Connection con = DriverManager.getConnection(URL, USERID, PASSWORD);
 			  System.out.println("Yhteys tietokantaan on luotu.");
@@ -131,9 +206,9 @@ public class P‰‰Ikkuna extends JFrame {
 			  ResultSet rs = stmt.executeQuery(SQL);
 			  
 			  while (rs.next()) {
-				  System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getInt(3));
-				  	model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
+				  model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
 			  }
+			  con.close();
 		 }
 		 catch(Exception e) {
 			 e.printStackTrace();
