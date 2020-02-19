@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -93,7 +94,6 @@ public class addFrame extends JFrame {
 		txtRD.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				System.out.print(txtRD.getText().length());
 				if(txtRD.getText().length() == 4) {
 					txtRD.replaceSelection("-");
 				}
@@ -134,10 +134,11 @@ public class addFrame extends JFrame {
 						  // Suljetaan yhteys
 						  con.close();
 						  JOptionPane.showMessageDialog(null,"Added an Album to the database.", "Success !",JOptionPane.PLAIN_MESSAGE);
+						  dispose();
 					  } 
 					  catch (SQLException e1) {
 					 	System.out.println("Virhe tietokannan käytössä!");
-					 	System.out.println(e1);
+					 	JOptionPane.showMessageDialog(null,"Make sure your release date format is correct!\n Year - Month - Date", "Error !",JOptionPane.PLAIN_MESSAGE);
 					  } // catch
 				}
 				else {

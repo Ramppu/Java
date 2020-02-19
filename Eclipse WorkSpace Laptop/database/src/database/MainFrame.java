@@ -169,26 +169,16 @@ public class MainFrame extends JFrame {
 			  
 			  while (rs.next()) {
 				  if (rs.getRow() <= model.getRowCount()) {
-					  System.out.print("muutos oli iffissä" + rs.getRow() + " " + model.getRowCount());
 					  table.setValueAt(rs.getString(1),x,0);
 					  table.setValueAt(rs.getString(2),x,1);
 					  table.setValueAt(rs.getString(3),x,2);
 					  x++;
 				  }
 				  else {
-					  System.out.print("muutos oli elsessä");
 					  model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
 				  }
 			  }
-			  con.close();
-			  	//TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
-			  	//table.setRowSorter(sorter);
-			  	
-			  	//List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
-			  	//sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-			  	//sorter.setSortKeys(sortKeys);
-			  
-			  
+			  con.close();			  
 		 }
 		 catch(Exception e) {
 			 e.printStackTrace();
@@ -209,6 +199,13 @@ public class MainFrame extends JFrame {
 				  model.addRow(new Object[] {rs.getString(1),rs.getString(2),rs.getString(3)});
 			  }
 			  con.close();
+			  //TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+			  //table.setRowSorter(sorter);
+			  	
+			  //List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
+			  //sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+			  //sorter.setSortKeys(sortKeys);
+			  //JÄRJESTYKSEN LISÄÄMINEN RIKKOI POISTOMETODIN JOSTAIN SYYSTÄ
 		 }
 		 catch(Exception e) {
 			 e.printStackTrace();
